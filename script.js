@@ -1,49 +1,52 @@
 const magicBook = {
-    boomSpell: 'Asda masasda',
-    soupSpell: 'Dase feads',
-};
-
-const kettle = {
-    material: 'metal',
-    result : null,
-    ingridients: {
-        ingridient1: 'nails',
-        ingridient2: 'bat heads',
-    },
-    shuffle() {
-        console.log('Shuffling..');
-    },
-    addToIngridients(key, value) {
-        console.log('Adding...', key, value);
-        this.ingridients[key] = value;
-        this.shuffle();
+    recipes: {
+        golem: {
+            bone: 10,
+            stone: 100,
+            nail: 100,
+            poo: 53
+        },
+        littleDevil: {
+            lava: 10,
+            evil: 999
+        },
     },
 };
 
-kettle.spellTheCast = function() {
-    console.log(this.material);
-    this.shuffle();
-};
-
-// kettle.addToIngridients('ing3', 'teeth');
-// kettle.addToIngridients('ing4', 'banana');
-// kettle.addToIngridients('ing5', 'poo');
-
-// const pick = (obj, key) => {
-//     return obj[key];
-// }
-
-const cat = {
-    material: 'abc',
-    spellTheCast () {
-        const self = this;
-        const fnc = function () {
-            return self.material;
+const kitchen = {
+    bone: 999,
+    stone: 999,
+    nail: 999,
+    poo: 999,
+    lava: 999,
+    evil: 999,
+    kettle: { 
+        material: 'metal',
+        ingridients: {},
+    },
+    addIngridientToKettle(nameOfIngridient, amount) {
+        kitchen.kettle.ingridients[nameOfIngridient] = amount;
+        kitchen[nameOfIngridient] = kitchen[nameOfIngridient] - amount;
+    },
+    cook(recipe) {
+        let res = 0;
+        let rec = magicBook.recipes[recipe];
+        for (const key in rec) {
+            if (rec.hasOwnProperty(key)) {
+                if(rec[key] !== kitchen.kettle.ingridients[key]) res++;
+            }; 
         };
-        alert(fnc());
+    if(res === 0) {
+        console.log(recipe);
+    } else {
+        console.log('Неправильное количество ингридиентов');
+    };  
     },
 };
 
-kettle.spellTheCast();
+kitchen.addIngridientToKettle('bone', 10);
+kitchen.addIngridientToKettle('stone', 100);
+kitchen.addIngridientToKettle('nail', 100);
+kitchen.addIngridientToKettle('poo', 53);
+kitchen.cook('golem');
 
- 
